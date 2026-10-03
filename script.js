@@ -10,3 +10,9 @@ window.onload = function () {
   const users = getUserIds();
   document.querySelector("body").innerText = `There are ${users.length} users`;
 };
+
+import { createDropdown } from "./dropDown.js";
+
+window.onload = function () {
+  createDropdown();
+};
