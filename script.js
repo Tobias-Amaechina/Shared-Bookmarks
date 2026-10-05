@@ -8,6 +8,16 @@ import { getUserIds } from "./storage.js";
 import { addBookmark } from "./alina/bookmarkForm.js";
 import { getLikeCount, likeBookmark } from "./alina/likes.js";
 
+window.onload = function () {
+  const users = getUserIds();
+  document.querySelector("body").innerText = `There are ${users.length} users`;
+};
+
+import { createDropdown } from "./dropDown.js";
+
+window.onload = function () {
+  createDropdown();
+};
 const users = getUserIds();
 const currentUserId = users[0];
 
