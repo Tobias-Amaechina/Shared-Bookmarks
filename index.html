@@ -1,22 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>Bookmark</title>
     <script type="module" src="script.js"></script>
   </head>
+
   <body>
-    <main>
-  <h1>Bookmarks</h1>
+    <h1>Shared Bookmarks</h1>
 
-  <label for="user-select">Select a user:</label>
+    <form id="bookmark-form">
+      <label for="url">URL</label>
+      <input id="url" name="url" type="url" required />
 
-  <select id="user-select"></select>
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required />
 
-  <section>
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <button type="submit">Add bookmark</button>
+    </form>
+
     <h2>Bookmarks</h2>
 
-    <div id="bookmarks-list"></div>
-  </section>
-</main>
+    <div id="bookmarks"></div>
   </body>
 </html>
