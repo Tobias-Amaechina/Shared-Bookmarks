@@ -3,20 +3,25 @@ export function formatDate(timestamp) {
   return date.toLocaleString();
 }
 
-export function displayBookmarks(bookmarks, container) {
-  const sortedBookmarks = [...bookmarks].sort((a, b) => {
-    return (b.createdAt || 0) - (a.createdAt || 0);
-  });
+export function sortBookmarks(bookmarks) {
+  return [...bookmarks].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+}
 
+export function displayBookmarks(bookmarks, container, actions) {
+  const sortedBookmarks = sortBookmarks(bookmarks);
   container.innerHTML = "";
 
   sortedBookmarks.forEach((bookmark) => {
-    const bookmarkElement = createBookmarkElement(bookmark);
+    const bookmarkElement = createBookmarkElement(bookmark, actions);
     container.appendChild(bookmarkElement);
   });
 }
 
-export function createBookmarkElement(bookmark) {
+export function createBookmarkElement(bookmark, actions = {}) {
+  const onCopy = actions.onCopy || (async () => false);
+  const onLike = actions.onLike || (() => 0);
+  const getLikeCount = actions.getLikeCount || (() => 0);
+
   const bookmarkElement = document.createElement("div");
   bookmarkElement.className = "bookmark-item";
 
@@ -35,14 +40,45 @@ export function createBookmarkElement(bookmark) {
   const timestamp = document.createElement("p");
   timestamp.textContent = `Created: ${formatDate(bookmark.createdAt)}`;
 
+  const actionsContainer = document.createElement("div");
+
+  const copyButton = document.createElement("button");
+  copyButton.type = "button";
+  copyButton.textContent = "Copy to clipboard";
+
+  const copyStatus = document.createElement("span");
+  copyStatus.setAttribute("role", "status");
+  copyStatus.setAttribute("aria-live", "polite");
+
+  copyButton.addEventListener("click", async () => {
+    const copied = await onCopy(bookmark.url);
+    copyStatus.textContent = copied
+      ? "Copied URL to clipboard."
+      : "Unable to copy URL.";
+  });
+
+  const likeButton = document.createElement("button");
+  likeButton.type = "button";
+
+  const updateLikeText = (count) => {
+    likeButton.textContent = `❤️ ${count}`;
+  };
+
+  updateLikeText(getLikeCount(bookmark));
+
+  likeButton.addEventListener("click", () => {
+    const newCount = onLike(bookmark);
+    updateLikeText(newCount);
+  });
+
+  actionsContainer.appendChild(copyButton);
+  actionsContainer.appendChild(copyStatus);
+  actionsContainer.appendChild(likeButton);
+
   bookmarkElement.appendChild(titleHeading);
   bookmarkElement.appendChild(description);
   bookmarkElement.appendChild(timestamp);
+  bookmarkElement.appendChild(actionsContainer);
 
   return bookmarkElement;
-}
-
-export function getBookmarksForUser(userId) {
-  const stored = localStorage.getItem(`stored-data-user-${userId}`);
-  return stored ? JSON.parse(stored) : [];
 }

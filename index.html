@@ -1,27 +1,40 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Bookmarks</title>
     <script type="module" src="script.js"></script>
   </head>
-
   <body>
-    <h1>Shared Bookmarks</h1>
+    <main>
+      <h1>Shared Bookmarks</h1>
 
-    <form id="bookmark-form">
-      <label for="url">URL</label>
-      <input id="url" name="url" type="url" required />
+      <section aria-labelledby="user-selection-heading">
+        <h2 id="user-selection-heading">Select user</h2>
+        <div id="user-selector"></div>
+      </section>
 
-      <label for="title">Title</label>
-      <input id="title" name="title" type="text" required />
+      <section aria-labelledby="add-bookmark-heading">
+        <h2 id="add-bookmark-heading">Add bookmark</h2>
+        <form id="bookmark-form">
+          <label for="url">URL</label>
+          <input id="url" name="url" type="url" required />
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description" required></textarea>
+          <label for="title">Title</label>
+          <input id="title" name="title" type="text" required />
 
-      <button type="submit">Add bookmark</button>
-    </form>
+          <label for="description">Description</label>
+          <textarea id="description" name="description" required></textarea>
 
-    <h2>Bookmarks</h2>
+          <button type="submit">Add bookmark</button>
+        </form>
+      </section>
 
-    <div id="bookmarks"></div>
+      <section aria-labelledby="bookmarks-heading">
+        <h2 id="bookmarks-heading">Bookmarks</h2>
+        <div id="bookmarks" aria-live="polite"></div>
+      </section>
+    </main>
   </body>
 </html>
