@@ -7,6 +7,7 @@
 import { addBookmark } from "./alina/bookmarkForm.js";
 import { getLikeCount, likeBookmark } from "./alina/likes.js";
 import { createDropdown } from "./dropDown.js";
+import { displayBookmarks } from "./bookmarkDisplay.js";
 
 const select = createDropdown();
 
@@ -39,16 +40,15 @@ function showBookmarks() {
   bookmarks.forEach((bookmark) => {
     const bookmarkElement = document.createElement("div");
 
-    const title = document.createElement("h3");
-    title.textContent = bookmark.title;
+  displayBookmarks(bookmarks, bookmarksContainer);
 
-    const description = document.createElement("p");
-    description.textContent = bookmark.description;
+  const bookmarkElements =
+    bookmarksContainer.querySelectorAll(".bookmark-item");
 
-    const link = document.createElement("a");
-    link.href = bookmark.url;
-    link.textContent = bookmark.url;
-    link.target = "_blank";
+  bookmarkElements.forEach((element, index) => {
+    const bookmark = [...bookmarks].sort(
+      (a, b) => (b.createdAt || 0) - (a.createdAt || 0),
+    )[index];
 
     const likeButton = document.createElement("button");
     likeButton.textContent = `❤️ ${getLikeCount(bookmark)}`;
@@ -58,12 +58,7 @@ function showBookmarks() {
       likeButton.textContent = `❤️ ${newCount}`;
     });
 
-    bookmarkElement.appendChild(title);
-    bookmarkElement.appendChild(description);
-    bookmarkElement.appendChild(link);
-    bookmarkElement.appendChild(likeButton);
-
-    bookmarksContainer.appendChild(bookmarkElement);
+    element.appendChild(likeButton);
   });
 }
 
@@ -78,9 +73,7 @@ form.addEventListener("submit", (event) => {
   };
 
   addBookmark(currentUserId, bookmark);
-
   form.reset();
-
   showBookmarks();
 });
 
