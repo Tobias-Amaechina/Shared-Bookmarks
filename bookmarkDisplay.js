@@ -5,6 +5,7 @@
  * 1. Displays bookmarks in reverse chronological order (newest first)
  * 2. Shows title, description, and created timestamp for each bookmark
  * 3. Makes the title a clickable link to the bookmark's URL
+ * 4. Provides copy-to-clipboard functionality for each bookmark
  *
  * All existing functionality is preserved and integrated seamlessly.
  */
@@ -20,15 +21,22 @@ function formatDate(timestamp) {
 }
 
 /**
+ * Sort bookmarks in reverse chronological order (newest first)
+ * @param {Array} bookmarks - Array of bookmark objects
+ * @returns {Array} Sorted array without mutating the input
+ */
+export function sortBookmarks(bookmarks) {
+  return [...bookmarks].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+}
+
+/**
  * Display bookmarks sorted in reverse chronological order
  * @param {Array} bookmarks - Array of bookmark objects
  * @param {HTMLElement} container - Container element to render bookmarks into
  */
 export function displayBookmarks(bookmarks, container) {
   // Sort bookmarks in reverse chronological order (newest first)
-  const sortedBookmarks = [...bookmarks].sort((a, b) => {
-    return (b.createdAt || 0) - (a.createdAt || 0);
-  });
+  const sortedBookmarks = sortBookmarks(bookmarks);
 
   // Clear existing content
   container.innerHTML = "";
@@ -93,20 +101,70 @@ function createBookmarkElement(bookmark) {
     margin: 8px 0 0 0;
   `;
 
+  // Create actions container
+  const actionsContainer = document.createElement("div");
+  actionsContainer.style.cssText = `
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  `;
+
+  // Create copy button
+  const copyButton = document.createElement("button");
+  copyButton.type = "button";
+  copyButton.textContent = "Copy to clipboard";
+  copyButton.style.cssText = `
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  `;
+
+  // Create copy status message (accessible live region)
+  const copyStatus = document.createElement("span");
+  copyStatus.setAttribute("role", "status");
+  copyStatus.setAttribute("aria-live", "polite");
+  copyStatus.style.cssText = `
+    font-size: 13px;
+    color: #28a745;
+    margin-left: 8px;
+    min-height: 20px;
+  `;
+
+  // Copy to clipboard handler
+  copyButton.addEventListener("click", async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(bookmark.url);
+        copyStatus.textContent = "✓ Copied URL to clipboard";
+        copyStatus.style.color = "#28a745";
+
+        // Clear message after 2 seconds
+        setTimeout(() => {
+          copyStatus.textContent = "";
+        }, 2000);
+      } else {
+        // Fallback for older browsers
+        copyStatus.textContent = "✗ Copy not supported";
+        copyStatus.style.color = "#dc3545";
+      }
+    } catch (err) {
+      copyStatus.textContent = "✗ Unable to copy URL";
+      copyStatus.style.color = "#dc3545";
+    }
+  });
+
   // Append all elements to the bookmark container
   bookmarkElement.appendChild(titleHeading);
   bookmarkElement.appendChild(description);
   bookmarkElement.appendChild(timestamp);
+  actionsContainer.appendChild(copyButton);
+  actionsContainer.appendChild(copyStatus);
+  bookmarkElement.appendChild(actionsContainer);
 
   return bookmarkElement;
-}
-
-/**
- * Get bookmarks for a specific user
- * @param {string} userId - The user ID
- * @returns {Array} Array of bookmark objects, or empty array if none exist
- */
-export function getBookmarksForUser(userId) {
-  const stored = localStorage.getItem(`stored-data-user-${userId}`);
-  return stored ? JSON.parse(stored) : [];
 }
