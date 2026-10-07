@@ -1,10 +1,11 @@
 body {
-  background-color: #111;
-  color: #f5f5f5;
+  background-color: #111111;
+  color: #ffffff;
   font-family: Arial, sans-serif;
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
+  line-height: 1.5;
 }
 
 h1,
@@ -28,25 +29,33 @@ select {
   box-sizing: border-box;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #222;
+  background-color: #222222;
   color: #ffffff;
   border: 2px solid #7cff7c;
   border-radius: 4px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #dddddd;
+  opacity: 1;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   outline: 3px solid #ffffff;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 textarea {
   min-height: 100px;
 }
 
+/* Buttons */
+
 button {
-  background-color: #176b2c;
+  background-color: #075c2a;
   color: #ffffff;
   border: 2px solid #7cff7c;
   padding: 10px 15px;
@@ -54,58 +63,105 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 14px;
 }
 
 button:hover,
 button:focus {
-  background-color: #7cff7c;
-  color: #111111;
+  background-color: #0b7a3a;
+  color: #ffffff;
 }
 
 button:focus {
   outline: 3px solid #ffffff;
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
+/* Bookmark cards */
+
 .bookmark-item {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border: 2px solid #7cff7c;
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 2px solid #7cff7c !important;
   border-radius: 6px;
   padding: 15px;
   margin: 15px 0;
 }
 
 .bookmark-item h3 {
-  color: #7cff7c;
+  color: #7cff7c !important;
   margin-top: 0;
 }
 
 .bookmark-item p {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
+/* Bookmark links */
+
 .bookmark-item a {
-  color: #7cff7c;
+  color: #7cff7c !important;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .bookmark-item a:hover,
 .bookmark-item a:focus {
-  color: #ffffff;
+  color: #ffffff !important;
+  background-color: #075c2a;
 }
 
+/* Bookmark buttons */
+
 .bookmark-item button {
-  background-color: #176b2c;
-  color: #ffffff;
+  background-color: #075c2a !important;
+  color: #ffffff !important;
+  border: 2px solid #7cff7c !important;
 }
 
 .bookmark-item button:hover,
 .bookmark-item button:focus {
-  background-color: #7cff7c;
-  color: #111111;
+  background-color: #0b7a3a !important;
+  color: #ffffff !important;
 }
 
+/* Copy status message */
+
+.bookmark-item span[role="status"] {
+  color: #7cff7c !important;
+}
+
+/* Dropdown */
+
 select {
+  max-width: 250px;
+}
+
+/* Disabled controls */
+
+button:disabled,
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: #333333;
+  color: #dddddd;
+  border-color: #aaaaaa;
+}
+
+/* Keyboard focus */
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+#user-selection {
+  margin-bottom: 20px;
+}
+
+#user-selection select {
   max-width: 250px;
 }
