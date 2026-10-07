@@ -2,6 +2,7 @@ import { addBookmark } from "./alina/bookmarkForm.js";
 import { getLikeCount, likeBookmark } from "./alina/likes.js";
 import { createDropdown } from "./dropDown.js";
 import { displayBookmarks } from "./bookmarkDisplay.js";
+import { getData } from "./storage.js";
 
 const select = createDropdown();
 
@@ -16,8 +17,7 @@ select.addEventListener("change", function () {
 });
 
 function showBookmarks() {
-  const bookmarks =
-    JSON.parse(localStorage.getItem(`stored-data-user-${currentUserId}`)) || [];
+  const bookmarks = getData(currentUserId) || [];
 
   bookmarksContainer.innerHTML = "";
 
@@ -40,7 +40,7 @@ function showBookmarks() {
 
   bookmarkElements.forEach((element, index) => {
     const bookmark = sortedBookmarks[index];
-    const likeButton = element.querySelector("button:last-of-type");
+    const likeButton = element.querySelector(".like-button");
 
     if (likeButton) {
       likeButton.textContent = `❤️ ${getLikeCount(bookmark)}`;
