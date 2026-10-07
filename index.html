@@ -1,6 +1,7 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <title>Shared Bookmarks</title>
     <script type="module" src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -8,21 +9,23 @@
   <body>
     <h1>Shared Bookmarks</h1>
 
-    <form id="bookmark-form">
-      <label for="url">URL</label>
-      <input id="url" name="url" type="url" required />
+    <main>
+      <form id="bookmark-form">
+        <label for="url">URL</label>
+        <input id="url" name="url" type="url" required />
 
-      <label for="title">Title</label>
-      <input id="title" name="title" type="text" required />
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" required />
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description" required></textarea>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" required></textarea>
 
-      <button type="submit">Add bookmark</button>
-    </form>
+        <button type="submit">Add bookmark</button>
+      </form>
 
-    <h2>Bookmarks</h2>
+      <h2>Bookmarks</h2>
 
-    <div id="bookmarks"></div>
+      <div id="bookmarks"></div>
+    </main>
   </body>
 </html>

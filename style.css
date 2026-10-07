@@ -10,7 +10,7 @@ body {
 h1,
 h2,
 h3 {
-  color: #4caf50;
+  color: #7cff7c;
 }
 
 label {
@@ -18,6 +18,7 @@ label {
   margin-top: 10px;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #ffffff;
 }
 
 input,
@@ -28,9 +29,16 @@ select {
   padding: 10px;
   margin-bottom: 10px;
   background-color: #222;
-  color: #fff;
-  border: 1px solid #355e3b;
+  color: #ffffff;
+  border: 2px solid #7cff7c;
   border-radius: 4px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
 }
 
 textarea {
@@ -38,42 +46,64 @@ textarea {
 }
 
 button {
-  background-color: #355e3b;
-  color: white;
-  border: none;
+  background-color: #176b2c;
+  color: #ffffff;
+  border: 2px solid #7cff7c;
   padding: 10px 15px;
   margin: 5px 5px 5px 0;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
 }
 
-button:hover {
-  background-color: #4caf50;
-  color: #111;
+button:hover,
+button:focus {
+  background-color: #7cff7c;
+  color: #111111;
 }
 
-article {
+button:focus {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.bookmark-item {
   background-color: #1a1a1a;
-  border: 1px solid #355e3b;
+  color: #ffffff;
+  border: 2px solid #7cff7c;
   border-radius: 6px;
   padding: 15px;
   margin: 15px 0;
 }
 
-article h3 {
+.bookmark-item h3 {
+  color: #7cff7c;
   margin-top: 0;
 }
 
-article a {
-  color: #66bb6a;
+.bookmark-item p {
+  color: #ffffff;
 }
 
-article a:hover {
-  color: #9ccc65;
+.bookmark-item a {
+  color: #7cff7c;
+  font-weight: bold;
 }
 
-article p {
-  color: #ddd;
+.bookmark-item a:hover,
+.bookmark-item a:focus {
+  color: #ffffff;
+}
+
+.bookmark-item button {
+  background-color: #176b2c;
+  color: #ffffff;
+}
+
+.bookmark-item button:hover,
+.bookmark-item button:focus {
+  background-color: #7cff7c;
+  color: #111111;
 }
 
 select {
