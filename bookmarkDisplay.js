@@ -123,6 +123,12 @@ function createBookmarkElement(bookmark) {
     cursor: pointer;
     font-size: 14px;
   `;
+  // Create a separate like button
+  const likeButton = document.createElement("button");
+
+  likeButton.type = "button";
+  likeButton.className = "like-button";
+  likeButton.textContent = "❤️ 0";
 
   // Create copy status message (accessible live region)
   const copyStatus = document.createElement("span");
@@ -164,6 +170,7 @@ function createBookmarkElement(bookmark) {
   bookmarkElement.appendChild(timestamp);
   actionsContainer.appendChild(copyButton);
   actionsContainer.appendChild(copyStatus);
+  actionsContainer.appendChild(likeButton);
   bookmarkElement.appendChild(actionsContainer);
 
   return bookmarkElement;
