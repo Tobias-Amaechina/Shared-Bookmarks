@@ -17,6 +17,11 @@ select.addEventListener("change", function () {
 });
 
 function showBookmarks() {
+  if (!currentUserId) {
+    bookmarksContainer.innerHTML = "";
+    return;
+  }
+
   const bookmarks = getData(currentUserId) || [];
 
   bookmarksContainer.innerHTML = "";
@@ -31,9 +36,9 @@ function showBookmarks() {
 
   displayBookmarks(bookmarks, bookmarksContainer);
 
-  // Wire up like buttons for each bookmark
   const bookmarkElements =
     bookmarksContainer.querySelectorAll(".bookmark-item");
+
   const sortedBookmarks = [...bookmarks].sort(
     (a, b) => (b.createdAt || 0) - (a.createdAt || 0),
   );
@@ -44,6 +49,7 @@ function showBookmarks() {
 
     if (likeButton) {
       likeButton.textContent = `❤️ ${getLikeCount(bookmark)}`;
+
       likeButton.addEventListener("click", () => {
         const newCount = likeBookmark(bookmark);
         likeButton.textContent = `❤️ ${newCount}`;
@@ -54,6 +60,10 @@ function showBookmarks() {
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  if (!currentUserId) {
+    return;
+  }
 
   const bookmark = {
     url: form.elements.url.value,
